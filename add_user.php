@@ -1,5 +1,24 @@
-<?php 
+<?php
+require_once "server.php";
+require_once "function/user_function.php";
 
+$pesan = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $nama     = $_POST["name"];
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $id = tambahUser($connect, $nama, $username, $password);
+
+    if ($id) {
+        $pesan = "Registrasi berhasil!";
+            header("Location: home.php");
+            exit();
+    } else {
+        $pesan = "Registrasi gagal.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +30,7 @@
 </head>
 <body>
     <h1>Add User</h1>
-    <form action="logic/add_user_logic.php" method="POST">
+    <form action="" method="POST">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br><br>
         
