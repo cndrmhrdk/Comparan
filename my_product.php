@@ -1,37 +1,117 @@
-<?php 
+<?php
     session_start();
-    require_once 'server.php';
-    require_once 'function/product_function.php';
+    require_once "server.php";
+    require_once "function/product_function.php";
 
     $id_user = $_SESSION["id_user"];
-    $produk_saya = produkSaya($connect, $id_user);
+    $produk  = produkSaya($connect, $id_user);
 ?>
 
 <!DOCTYPE html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Produk Saya</title>
+    <style>
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 180px;
+            cursor: pointer;
+        }
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        /* Modal */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+        .modal {
+            background: white;
+            width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .modal img {
+            width: 100%;
+        }
+        .tutup {
+            float: right;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h2>my produk</h2>
+    <h2>Produk Saya</h2>
+    <a href="add_product.php">+ Tambah Produk</a><br><br>
 
-    <? if(empty($produk_saya)): ?>
-        <p>Belum ada produk yang ditambahkan.</p>
-    <? else: ?>
-        <?php foreach($produk_saya as $produk): ?>
-            <div class="card" style="width: 18rem;">
-                <img src="uploads/produk/<?= $produk['gambar'] ?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title"><?= $produk['nama_produk'] ?></h5>
-                    <p class="card-text"><?= $produk['harga'] ?></p>
-                    <p class="card-text"><?= $produk['stok'] ?></p>
-                    <p class="card-text"><?= $produk['deskripsi'] ?></p>
+    <?php if (count($produk) === 0): ?>
+        <p>Belum ada produk.</p>
+    <?php else: ?>
+        <div class="grid">
+            <?php foreach ($produk as $p): ?>
+                <div class="card" onclick="bukaModal(
+                    '<?= $p['gambar'] ?>',
+                    '<?= $p['nama_produk'] ?>',
+                    '<?= $p['harga'] ?>',
+                    '<?= $p['stok'] ?>',
+                    '<?= $p['kategori'] ?>',
+                    '<?= $p['status'] ?>',
+                    '<?= $p['deskripsi'] ?>'
+                )">
+                    <img src="uploads/produk/<?= $p['gambar'] ?>">
+                    <b><?= $p['nama_produk'] ?></b><br>
+                        Rp <?= number_format($p['harga'], 0, ',', '.') ?><br>
+                        Stok: <?= $p['stok'] ?>
                 </div>
-            </div>
-        <?php endforeach; ?>
-    <? endif; ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <!-- Modal -->
+    <div class="overlay" id="overlay" onclick="tutupModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <span class="tutup" onclick="tutupModal()">✕</span>
+            <img id="m-gambar" src=""><br><br>
+            <b id="m-nama"></b><br>
+            Harga    : Rp <span id="m-harga"></span><br>
+            Stok     : <span id="m-stok"></span><br>
+            Kategori : <span id="m-kategori"></span><br>
+            Status   : <span id="m-status"></span><br>
+            Deskripsi: <span id="m-deskripsi"></span>
+        </div>
+    </div>
+
+    <script>
+        function bukaModal(gambar, nama, harga, stok, kategori, status, deskripsi) {
+            document.getElementById("m-gambar").src       = "uploads/produk/" + gambar;
+            document.getElementById("m-nama").innerText      = nama;
+            document.getElementById("m-harga").innerText     = parseInt(harga).toLocaleString("id-ID");
+            document.getElementById("m-stok").innerText      = stok;
+            document.getElementById("m-kategori").innerText  = kategori;
+            document.getElementById("m-status").innerText    = status;
+            document.getElementById("m-deskripsi").innerText = deskripsi;
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function tutupModal() {
+            document.getElementById("overlay").style.display = "none";
+        }
+    </script>
 
 </body>
 </html>
