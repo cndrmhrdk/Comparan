@@ -310,10 +310,10 @@
           <!-- Center plant (large emoji stand-in) -->
           <div style="position:relative;z-index:2;font-size:9rem;line-height:1;margin-bottom:-10px;">🌿</div>
           <!-- Buy Now -->
-          <button class="btn-buy">
+          <a href="add_product.php"><button class="btn-buy">
             Buy Now
             <span class="arrow">›</span>
-          </button>
+          </button></a>
         </div>
       </div>
 
