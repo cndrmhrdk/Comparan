@@ -128,6 +128,8 @@
         </div>
     </div>
 
+    <a href="logout.php"><button class="btn btn-secondary">Logout</button></a>
+
     <script>
         let idProdukDipilih = null;
         let stokTersedia    = 0;
