@@ -153,7 +153,7 @@
 
         function tambahKeranjang() {
             let jumlah = document.getElementById("m-jumlah").value;
-            window.location.href = "cart_logic.php?id_produk=" + idProdukDipilih + "&jumlah=" + jumlah;
+            window.location.href = "logic/cart_logic.php?id_produk=" + idProdukDipilih + "&jumlah=" + jumlah;
         }
 
         function beliSekarang() {
