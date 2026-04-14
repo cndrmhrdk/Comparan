@@ -1,8 +1,10 @@
 <?php 
+    // Fungsi buat tambah item ke keranjang
     function tambahKeranjang($connect, $id_cart, $id_produk, $jumlah){
         $sql = "SELECT * FROM cart_items WHERE id_cart = '$id_cart' AND id_produk = '$id_produk'";
         $cek = $connect->query($sql);
 
+        // kalo Sudah ada, update jumlah aje
         if($cek->num_rows > 0){
             $item = $cek->fetch_assoc();
             $jumlahBaru = $item["jumlah"] + $jumlah;
@@ -15,6 +17,7 @@
         }
     }
 
+    // Fungsi buat tampilkan isi keranjang berdasarkan id_cart
     function tampilKeranjang($connect, $id_cart){
         $sql = "SELECT cart_items.*, products.nama_produk, products.harga, products.gambar 
                             FROM cart_items 
@@ -24,6 +27,7 @@
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    // Fungsi buat hapus item dari keranjang berdasarkan id_item
     function hapusItemKeranjang($connect, $id_item){
         $sql = "DELETE FROM cart_items WHERE id_item = '$id_item'";
         $connect->query($sql);
