@@ -1,0 +1,227 @@
+/* font family */
+@font-face {font-family: 'Calvoria Stelline'; src: url('../fonts/Calvoria Stelline.ttf');}
+@font-face {font-family: 'Catchye'; src: url('../fonts/Catchye.otf');}
+@font-face {font-family: 'Vortigra'; src: url('../fonts/Vortigra.otf');}
+@font-face {font-family: 'Voguella'; src: url('../fonts/Voguella.ttf');}
+@font-face {font-family: 'Safira'; src: url('../fonts/Safira March Personal Use Only.ttf');}
+@font-face {font-family: 'Ethereal Medium'; src: url('../fonts/ethereal/EtherealDemo-Medium.otf');}
+@font-face {font-family: 'Ethereal Bold'; src: url('../fonts/ethereal/EtherealDemo-Bold.otf');}
+@font-face {font-family: 'Clemente'; src: url('../fonts/ClementePDae-Light.ttf');}
+@font-face {font-family: 'Florsene'; src: url('../fonts/Florsn01.ttf');}
+@font-face {font-family: 'LT'; src: url('../fonts/LTSuperior-Medium.ttf');}
+@font-face {font-family: 'Okaluera'; src: url('../fonts/Okaluera.otf');}
+@font-face {font-family: 'Chocolate'; src: url('../fonts/TT Chocolates Trial Medium.otf');}
+@font-face {font-family: 'Fors'; src: url('../fonts/TT Fors Trial Regular.ttf');}
+@font-face {font-family: 'Inter'; src: url('../fonts/TT Interphases Pro Trial Regular.ttf');}
+@font-face {font-family: 'Aesthetic'; src: url('../fonts/Aesthetic Moment  Italic Personal Used.ttf');}
+@font-face {font-family: 'Alpazhet'; src: url('../fonts/Alphazet-SemiBold.ttf');}
+@font-face {font-family: 'Belgiano'; src: url('../fonts/Belgiano Serif 2.ttf');}
+@font-face {font-family: 'Bulter'; src: url('../fonts/Butler-Free-SBd.otf');}
+
+/* animation start */
+@keyframes float {
+    0% {
+        transform: translate(0, 0px);
+    }
+    50% {
+        transform: translate(0, 4px);
+    }
+    100% {
+        transform: translate(0, -0px);
+    }
+}
+
+@keyframes slide-right {
+    0% {
+        -webkit-transform: translateX(-50px);
+                transform: translateX(-50px);
+    }
+    100% {
+        -webkit-transform: translateX(0);
+                transform: translateX(0);
+    }
+}
+
+@keyframes slide-left {
+    0% {
+        -webkit-transform: translateX(100px);
+                transform: translateX(100px);
+    }
+    100% {
+        -webkit-transform: translateX(0);
+                transform: translateX(0);
+    }
+}
+
+@keyframes slide-top {
+    0% {
+        -webkit-transform: translateY(-100px);
+                transform: translateY(-100px);
+    }
+    100% {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+    }
+}
+
+@keyframes slide-bottom {
+    0% {
+        -webkit-transform: translateY(100px);
+                transform: translateY(100px);
+    }
+    100% {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+    }
+}
+/* animation end */
+
+/* styling start */
+*{
+    /* outline: solid 1px red; */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.kolom-kiri{
+    -webkit-animation: slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.kolom-kanan{
+    height: 100vh;
+    -webkit-animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+h1 {
+    font-family: 'LT';
+}
+
+h2 {
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background-color: black;
+    background-image: url(../assets/backgroundd.jpeg);
+    background-repeat: none;
+    margin: 0;
+    height: 100vh;
+}
+
+.tagline{
+    width: 100%;
+    font-size: 54px;
+    letter-spacing: -1px;
+    color: #d8ffa4;
+    text-shadow: #000000a9 1px 1px 10px, #6fb400b8 0 0 10px;
+    line-height: 1;
+    
+}
+
+.taglineBottom{
+    font-family: 'Times New Roman', sans-serif;
+    color: #ffffff84;
+    font-style: italic;
+    font-size: 21px;
+    width: 100%;
+    margin-bottom:36px;
+    text-shadow: #386600ca 0px 0px 5px;
+}
+
+.header{
+    width: 400px;
+    font-size: 40px;
+}
+
+.label-login{
+    gap: 10px;
+    background-color: #f3f3f3;
+}
+
+.signInButton{
+    background-color: #6FB400;
+    color: white;
+    transition: .3s all ease-in-out;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.signInButton:hover{
+    background-color: #629f00;
+    color: white;
+}
+
+.signUpButton{
+    background-color: #ffffff;
+    transition: .3s all ease-in-out;
+    color: #629f00;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.signUpButton:hover{
+    background-color: #6FB400;
+    color: white;
+}
+
+.form-control{
+    border: solid 1.5px #6FB400;
+}
+
+.logo{
+    animation: float 3s ease-in-out infinite;
+}
+
+.logo:hover{
+    animation: float 3s ease-in-out infinite;
+}
+
+.loginButton {
+    background: linear-gradient(to right, #6FB400 50%, white 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    height: 40px;
+    color: #6FB400;
+    border: 2px solid #6FB400;
+    font-weight: 500;
+    transition: all 0.4s ease-out;
+    border-radius: 50rem !important; 
+    overflow: hidden !important;
+}
+
+.loginButton:hover {
+    background-position: left bottom;
+    color: white;
+}
+
+/* mobile */
+@media(max-width: 768px){
+    .kolom-kiri{
+        height: 50vh !important;
+        -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
+    .logo{
+        width: 100px !important;
+    }
+
+    .tagline, .taglineSpan{
+        font-size: 25px !important;
+    }
+
+    .taglineBottom{
+        font-size: 10px;
+    }
+
+    .kolom-kanan{
+        height: 55vh;
+        border-radius: 0 0 0 0 !important;
+        -webkit-animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        }
+        
+}
