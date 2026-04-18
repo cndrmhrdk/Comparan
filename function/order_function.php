@@ -37,6 +37,22 @@
     // 7. Kosongkan keranjang
     $connect->query("DELETE FROM cart_items WHERE id_cart = '$id_cart'");
 
+
     return $id_order;
+    }
+
+    function riwayatOrder($connect, $id_user){
+        $sql = "SELECT * FROM orders WHERE id_user = '$id_user' ORDER BY tanggal_order DESC";
+        $result = $connect->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    function detailOrder($connect, $id_order){
+        $sql = "SELECT order_items.*, products.nama_produk, products.gambar 
+                                FROM order_items 
+                                JOIN products ON order_items.id_produk = products.id_produk 
+                                WHERE order_items.id_order = '$id_order'";
+        $result = $connect->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 ?>
