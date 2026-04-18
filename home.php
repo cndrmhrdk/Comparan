@@ -19,23 +19,23 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Google Fonts -->
 
-    <style>
-    .modal-konten {
-    background: white;
-    width: 400px;
-    margin: 100px auto;
-    padding: 20px;
-    border-radius: 8px;
-    position: relative; /* Tambahkan ini */
-    z-index: 1001;
-}
-    /* placeholder plant images via emoji/css */
-    .plant-emoji {
-      font-size: 2.2rem;
-      width: 56px; height: 56px;
-      display: flex; align-items: center; justify-content: center;
-    }
-     .grid {
+<style>
+        .modal-konten {
+        background: white;
+        width: 400px;
+        margin: 100px auto;
+        padding: 20px;
+        border-radius: 8px;
+        position: relative; /* Tambahkan ini */
+        z-index: 1001;
+        }
+        /* placeholder plant images via emoji/css */
+        .plant-emoji {
+        font-size: 2.2rem;
+        width: 56px; height: 56px;
+        display: flex; align-items: center; justify-content: center;
+        }
+        .grid {
             display: flex;
             flex-wrap: wrap;
             gap: 16px;
