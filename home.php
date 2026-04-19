@@ -141,7 +141,7 @@
             <!-- this is card -->
             <h3 class="text-center mt-5 mb-3 fw-semibold" style="font-family: 'Alphazet', sans-serif; color:#5d9300;">Why Choose Comparan?</h3>
             <div class="row px-0 w-100 justify-content-center">
-                <div class="iconCard card col-12 col-md-4 mb-3 border-0" style="max-width: 540px; padding-left: 0;">
+                <div class="iconCard card col-12 col-md-4 mb-3 border-0" style=" padding-left: 0;">
                     <div class="row g-0">
                         <div class="iconBody card-body text-start">
                             <h5 class="iconTitle card-title"><i class="bi bi-leaf-fill"></i> Sustainable Products</h5>
@@ -149,7 +149,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="iconCard card col-12 col-md-4 mb-3 border-0" style="max-width: 540px;">
+                <div class="iconCard card col-12 col-md-4 mb-3 border-0" style="">
                     <div class="row g-0">
                         <div class="iconBody card-body text-start">
                             <h5 class="iconTitle card-title"><i class="bi bi-truck"></i> Safe and Fast Delivery</h5>
@@ -157,7 +157,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="iconCard card col-12 col-md-4 mb-3 border-0" style="max-width: 540px; padding-right: 0;">
+                <div class="iconCard card col-12 col-md-4 mb-3 border-0" style=" padding-right: 0;">
                     <div class="row g-0">
                         <div class="iconBody card-body text-start">
                             <h5 class="iconTitle card-title"><i class="bi bi-person-heart"></i> Support Local Farmers</h5>
@@ -207,8 +207,8 @@
         <?php if (count($produk) === 0): ?>
             <p>Belum ada produk tersedia.</p>
             <?php else: ?>
-                <div class="row p-0 bg-primary mx-4">
-                    <div class="grid p-0 mx-4">
+                <div class="col p-0 bg-primary mx-4">
+                    <div class="row">
                         <?php foreach ($produk as $p): ?>
                             <div class="productCard" onclick="bukaModal(
                                 '<?= $p['gambar'] ?>',
