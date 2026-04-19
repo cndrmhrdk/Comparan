@@ -31,6 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="css/style.css">
     <title>Sign Up</title>
     <style>
+    body{
+        background-color: black;
+        background-image: url(assets/backgroundd.jpeg);
+        background-repeat: none;
+        margin: 0;
+        height: 100vh;
+    }
     .signUpButton{
         background-color: #6FB400;
         color: white;
@@ -74,9 +81,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <h4 class="taglineBottom text-center fw-medium">-make the world a better place. Small actions grow into meaningful change-</h4>
                 </div>
             </div>
-            <div class="kolom-kanan col-12 col-md-5 bg-white rounded-start-4 h-100 m-0 p-0">
+            <div class="kolom-kanan-up col-12 col-md-5 bg-white rounded-start-4 h-100 m-0 p-0">
                 <div>
-                    <h2 class="header text-start fw-semibold text-black mt-5 mx-5 mb-0 p-0">Hello user!</h2>
+                    <h2 class="text-start fw-semibold text-black mt-5 mx-5 mb-0 p-0">Hello user!</h2>
                     <p class=" text-start text-secondary mx-5 p-0">Please Sign-Up to continue to our shop</p>
                     <div class="">
                         <div class="container text-center">
