@@ -6,9 +6,11 @@
     require_once '../server.php';
     require_once '../function/cart_function.php';
     require_once '../function/order_function.php';
+    require_once '../function/voucher_function.php';
 
     $id_user = $_SESSION["id_user"];
     $alamat  = $_POST["alamat"];
+    $id_vouchers  = $_POST["id_vouchers"] ?? [];
 
     $sql = "SELECT id_cart FROM cart WHERE id_user = '$id_user'";
     $result  = $connect->query($sql);
@@ -20,7 +22,7 @@
     foreach ($items as $item) {
         $total += $item["harga"] * $item["jumlah"];
     }
-    $id_order = checkout($connect, $id_user, $id_cart, $alamat, $items, $total);
+    $id_order = checkout($connect, $id_user, $id_cart, $alamat, $items, $total, $id_vouchers);
 
     header("Location: ../cart.php?id_order=" . $id_order);
     exit;
