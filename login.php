@@ -37,6 +37,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <title>Sign In</title>
+    <style>
+    body{
+        background-color: black;
+        background-image: url(assets/backgroundd.jpeg);
+        background-repeat: none;
+        margin: 0;
+        height: 100vh;
+    }
+    </style>
 </head>
 <body>
     <div class="container-fluid m-0 p-0" style="background-color: #00000054;">
@@ -58,7 +67,7 @@
             </div>
             <div class="kolom-kanan col-12 col-md-5 bg-white rounded-0 rounded-start-4 m-0 p-0 order-1 order-md-2">
                 <div class="kanan">
-                    <h2 class="text-start fw-semibold text-black mt-5 mx-5 mb-0 p-0">Hello user!</h2>
+                    <h2 class="titleFormLogin text-start fw-semibold text-black mt-5 mx-5 mb-0 p-0">Hello user!</h2>
                     <p class=" text-start text-secondary mx-5 p-0">Please Sign-In to continue to our shop</p>
                     <div class="">
                         <div class="container text-center">

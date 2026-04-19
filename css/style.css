@@ -1,4 +1,4 @@
-/* font family */
+/* FONT FAMILY */
 @font-face {font-family: 'Calvoria Stelline'; src: url('../fonts/Calvoria Stelline.ttf');}
 @font-face {font-family: 'Catchye'; src: url('../fonts/Catchye.otf');}
 @font-face {font-family: 'Vortigra'; src: url('../fonts/Vortigra.otf');}
@@ -17,9 +17,11 @@
 @font-face {font-family: 'Alpazhet'; src: url('../fonts/Alphazet-SemiBold.ttf');}
 @font-face {font-family: 'Belgiano'; src: url('../fonts/Belgiano Serif 2.ttf');}
 @font-face {font-family: 'Bulter'; src: url('../fonts/Butler-Free-SBd.otf');}
+/* FONT FAMILY */
 
-/* animation start */
+/* ANIMATION */
 @keyframes float {
+    /* LOGIN */
     0% {
         transform: translate(0, 0px);
     }
@@ -74,44 +76,51 @@
                 transform: translateY(0);
     }
 }
-/* animation end */
+    /* LOGIN */
 
-/* styling start */
+    /* DASHBOARD */
+@keyframes flicker{
+        50% {color: #a0d000;}
+    }
+
+::selection {
+    background: #85c22194 !important;
+    color: white !important;
+}
+
+::-moz-selection {
+    background: #85c22194 !important;
+    color: white !important;
+}
+    /* DASHBOARD */
+
+/* ANIMATION */
+
+/* STYLING */
 *{
     /* outline: solid 1px red; */
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
-
+    /* LOGIN */
 .kolom-kiri{
     -webkit-animation: slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
             animation: slide-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
-.kolom-kanan{
+.kolom-kanan, .kolom-kanan-up{
     height: 100vh;
     -webkit-animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
             animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
-h1 {
-    font-family: 'LT';
-}
-
-h2 {
+.titleFormLogin {
     font-family: 'Poppins', sans-serif;
 }
 
-body{
-    background-color: black;
-    background-image: url(../assets/backgroundd.jpeg);
-    background-repeat: none;
-    margin: 0;
-    height: 100vh;
-}
-
 .tagline{
+    font-family: 'LT';
     width: 100%;
     font-size: 54px;
     letter-spacing: -1px;
@@ -196,9 +205,272 @@ body{
     background-position: left bottom;
     color: white;
 }
+    /* LOGIN */
 
-/* mobile */
+    /* DASHBOARD */
+.containerItemNav a{
+    font-family: 'LT', sans-serif;
+    letter-spacing: 2px;
+    color: black;
+    margin-top: 5px;
+    padding: 0px 0px;
+    /* border: 2px solid black; */
+}
+
+.cartIcon{
+    font-size: 24px;
+    color: #373737;
+}
+
+/* #dashboard{ */
+    /* margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    margin-top: 75px !important; */
+/* } */
+
+video{
+    color:black;
+    opacity: 36%;
+}
+
+.dashText{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.dashTitle{
+    font-family: 'Vortigra', sans-serif;
+    width: 100%;
+    font-size: 40px;
+    letter-spacing: 0px;
+    /* font-weight: 600; */
+    color: #6FB400;
+    text-shadow: 0 0 10px #4d7c00c7;
+    text-align: center;
+}
+
+.dashTagline{
+    font-family: 'Alphazet' sans-serif;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 400;
+    /* font-style: italic; */
+    letter-spacing: 8px;
+    color: #e3ffb7;
+    text-shadow: 0 0 10px #96f202c2;
+    text-align: center;
+}
+
+#about{
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.aboutTitle{
+    font-family: 'Alphazet', sans-serif;
+    margin-bottom: 3rem;
+    border-radius: 50px;
+    background-color: transparent;
+    color: #5d9300 !important;
+    border: #5d9300 2px solid !important;
+}
+
+.aboutTitle:hover{
+    color: #e3ffb7 !important;
+    background-color: #5d9300;
+    border: #5d9300 2px solid;
+}
+
+.taglineAboutContent{
+    font-family: 'Alphazet', sans-serif;
+    width: 100%;
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: -2px;
+    color: #5d9300;
+    text-align: center;
+}
+
+.kolomKiri{
+    padding: 0px 0px;
+    padding-right: 3rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.kolomKanan{
+    padding: 0px 0px;
+    padding-right: 3rem;
+}
+
+.vidKemasBibit{
+    width:100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all .5s ease-in-out;
+    transition-delay: 0.1s;
+}
+
+.vidKemasBibit:hover{
+    box-shadow: #3865009d 0px 0px 20px;
+    /* transform: scale(1.005); */
+    cursor: pointer;
+}
+
+.titleKemas{
+    font-family: 'Belgiano', sans-serif;
+    width: 100%;
+    font-size: 36px;
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 0.1px;
+    color: #5d9300;
+    animation: flicker 2s infinite;
+}
+
+.subTitleKemas{
+    font-family: 'Alphazet', sans-serif;
+    width: 100%;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    color: #000000;
+    opacity: 65%;
+}
+
+.comparanMeans{
+    font-family: 'Alphazet', sans-serif;
+    font-weight: 600;
+    font-style: italic;
+    color: #5d9300;
+}
+
+.explainComparan{
+    font-family: 'Alphazet', sans-serif;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+    line-height: 1.5;
+    color: #000000;
+}
+
+.iconCard{
+    background-color: transparent;
+    /* margin-top: 1.5rem; */
+    padding: 10px;
+}
+
+.iconBody{
+    background-color: #426b00;
+    border-radius: 20px;
+    padding: 25px;
+    transition: all 0.3s ease-in-out;
+}
+
+.iconBody:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 0px 25px rgba(51, 108, 1, 0.57);
+}
+
+.iconTitle{
+    font-family: 'Alphazet', sans-serif;
+    font-weight: 600;
+    color: #e3ffb7;
+}
+
+.iconTitle i{
+    font-size: 28px;
+    margin-right: 8px;
+}   
+
+.explainIcon{
+    font-family: 'Alphazet', sans-serif;
+    color: #e3ffb7;
+}
+
+.vision{
+    font-family: 'Catchye', sans-serif;
+    width: 100%;
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: #5d9300;
+    font-style: italic;
+}
+
+.visionCard{
+    border-radius: 40px;
+    transition: all 0.5s ease-in-out;
+}
+
+.visionCard:hover{
+    transform: scale(1.025);
+    cursor: pointer;
+}
+
+.imageVisionCard{
+    margin: 0;
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    opacity: 85%;
+}
+
+.visionBody{
+    padding: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.visionText {
+    font-family: 'Clemente', sans-serif;
+    letter-spacing: 2px;
+    position: absolute;
+    bottom: 20px;
+    z-index: 2;
+    width: 90%;
+    padding: 16px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #426b00;
+    backdrop-filter: blur(5px);
+    background: linear-gradient(to right, rgba(160, 181, 111, 0.59) 50%, #f3ffd6bc 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all 0.4s ease-out;
+    border-radius: 50rem !important; 
+    overflow: hidden !important;
+}
+
+.visionText:hover {
+    color: #ffffff;
+    background-position: left bottom;
+}
+
+#shop{
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.productCard{
+    /* margin: 1rem; */
+}
+
+    /* TAMPILAN HOME */
+/* STYLING */
+
+/* TAMPILAN MOBILE */
 @media(max-width: 768px){
+    /* TAMPILAN LOGIN */
     .kolom-kiri{
         height: 50vh !important;
         -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -218,10 +490,57 @@ body{
     }
 
     .kolom-kanan{
-        height: 55vh;
+        height: 55vh !important;
         border-radius: 0 0 0 0 !important;
         -webkit-animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
             animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-        }
-        
+    }
+
+    .kolom-kanan-up{
+        height: 65vh !important;
+        border-radius: 0 0 0 0 !important;
+        -webkit-animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+    /* TAMPILAN LOGIN */
+
+    /* TAMPILAN HOME */
+    nav{
+            padding: 0px !important;
+    }
+
+    .navbar-toggler{
+        padding: 0px 0px !important;
+        margin-right: 16px;
+        display: flex;
+        flex-direction: column ;
+        align-items: center;
+        border: 0px !important;
+    }
+
+    .navbar-toggler-icon{
+        width: 16px !important;
+        height: 16px;
+    }
+
+    .logoNav{
+        width: 80px !important;
+        padding: 0px 0px !important;
+    }
+
+    video{
+        height: 18vh !important;
+    }
+
+    .dashTitle{
+        font-size: 12px;
+    }
+
+    .dashTagline{
+        font-size: 7px;
+        letter-spacing: 2px;
+    }
+    /* TAMPILAN HOME */
+
 }
+/* TAMPILAN MOBILE */
