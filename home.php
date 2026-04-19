@@ -156,7 +156,7 @@
                 <div class="row w-100 align-items-center">
                     <div class="col-11 d-flex justify-content-center">
                         <div class="containerItemNav navbar-nav d-flex justify-content-center">
-                            <a class="nav-link rounded-start-pill px-3" aria-current="page" href="#dashboard">Dashboard</a>
+                            <a class="nav-link rounded-start-pill px-3" aria-current="page" href="#">Dashboard</a>
                             <a class="nav-link px-3" href="#about">About</a>
                             <a class="nav-link rounded-end-pill px-3" href="#shop">Shop</a>
                         </div>
@@ -319,29 +319,9 @@
         </a>
     </section>
 
-    <script>
-        let idProdukDipilih = null;
-        let stokTersedia    = 0;
 
-        function bukaModal(gambar, nama, harga, stok, kategori, deskripsi, status, id_produk) {
-            idProdukDipilih = id_produk;
-            stokTersedia    = parseInt(stok);
 
-            document.getElementById("m-gambar").src          = "uploads/produk/" + gambar;
-            document.getElementById("m-nama").innerText      = nama;
-            document.getElementById("m-harga").innerText     = parseInt(harga).toLocaleString("id-ID");
-            document.getElementById("m-stok").innerText      = stok;
-            document.getElementById("m-kategori").innerText  = kategori;
-            document.getElementById("m-deskripsi").innerText = deskripsi;
-            document.getElementById("m-status").innerText    = status;
-            document.getElementById("m-jumlah").max          = stok;
-            document.getElementById("overlay").style.display = "block";
-        }
-
-        <div class="tombol-group">
-            <button class="btn btn-warning w-100" onclick="tambahKeranjang()">+ Keranjang</button>
-            <button class="btn btn-primary w-100" onclick="beliSekarang()">Beli Sekarang</button>
-        </div>
+        
     </div>
 </div>
 
