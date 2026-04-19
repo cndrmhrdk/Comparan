@@ -22,6 +22,10 @@
         }
 
         //kurangi poin user
+        $sql = "UPDATE users SET poin = poin - '{$voucher['poin_diperlukan']}' WHERE id_user = '$id_user'";
+        $connect->query($sql);
+
+        //Simpan ke user_voucher
         $sql = "INSERT INTO user_vouchers (id_user, id_voucher, status) VALUES ('$id_user', '$id_voucher', 'aktif')";
         $connect->query($sql);
         return "berhasil";

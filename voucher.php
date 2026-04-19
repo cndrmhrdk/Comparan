@@ -12,7 +12,6 @@
     $result = $connect->query($sql);
     $user = $result->fetch_assoc();
     $poin = $user["poin"];
-
 ?>
 
 <!DOCTYPE html>

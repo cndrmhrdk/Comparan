@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     require_once "../server.php";
     require_once "../function/voucher_function.php";
 
