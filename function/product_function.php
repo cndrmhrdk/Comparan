@@ -22,4 +22,32 @@
         //fetch_all() digunakan untuk mengambil semua baris hasil query. 
         // MYSQLI_ASSOC memastikan bahwa setiap baris dikembalikan sebagai array asosiatif, di mana nama kolom digunakan sebagai kunci.
     }
+
+    // Fungsi ngedit data product
+    function editProduk($connect, $id_produk, $nama_produk, $harga, $stok, $deskripsi, $kategori, $gambar) {
+        if ($gambar) {
+            $connect->query("UPDATE products SET 
+                            nama_produk = '$nama_produk',
+                            harga       = '$harga',
+                            stok        = '$stok',
+                            deskripsi   = '$deskripsi',
+                            kategori    = '$kategori',
+                            gambar      = '$gambar'
+                            WHERE id_produk = '$id_produk'");
+        } else {
+            $connect->query("UPDATE products SET 
+                            nama_produk = '$nama_produk',
+                            harga       = '$harga',
+                            stok        = '$stok',
+                            deskripsi   = '$deskripsi',
+                            kategori    = '$kategori'
+                            WHERE id_produk = '$id_produk'");
+        }
+    }
+
+    // Fungsi buat hapus produk
+    function hapusProduk($connect, $id_produk) {
+        $sql = "DELETE FROM products WHERE id_produk = '$id_produk'";
+        $connect->query($sql);  
+    }
 ?>

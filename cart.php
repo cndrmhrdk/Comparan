@@ -42,7 +42,7 @@
             </div>
         <?php endforeach; ?>
         <h3>Total Belanja: Rp <?= number_format($totalBelanja, 0, ',', '.') ?></h3>
-        <a href="checkout.php">Checkout</a>
+        <a href="./checkout.php">Checkout</a>
     <?php endif; ?>
 
 </body>

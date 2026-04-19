@@ -1,19 +1,26 @@
 <?php 
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     require_once 'server.php';
     require_once 'function/product_function.php';
+
+    // Proteksi Login
+    if (!isset($_SESSION["id_user"])) {
+        header("Location: login.php");
+        exit;
+    }
 
     $id_user = $_SESSION["id_user"];
     $produk = tampilSemuaProduk($connect, $id_user);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Blooming – Plant Shop</title>
+    <title>Comparan</title>
 
     <!-- Bootstrap 5 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
@@ -56,28 +63,83 @@
             object-fit: cover;
         }
 
-        /* Modal */
+        /* Overlay */
         .overlay {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
+            z-index: 9999; 
         }
-        .modal {
+
+        /* Kotak Modal */
+        .modal-konten {
             background: white;
-            width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            border-radius: 8px;
+            width: 95%;
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 25px;
+            border-radius: 15px;
+            position: relative;
+            z-index: 10000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        .modal img {
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            width: 220px;
+            border-radius: 12px;
+            background: white;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-img-container {
             width: 100%;
+            height: 180px;
+            overflow: hidden;
         }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-konten img {
+            width: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
         .tutup {
             float: right;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 28px;
+            line-height: 20px;
+            color: #999;
+        }
+
+        .tutup:hover { color: #333; }
+
+        .tombol-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -276,21 +338,54 @@
             document.getElementById("overlay").style.display = "block";
         }
 
-        function tutupModal() {
-            document.getElementById("overlay").style.display = "none";
-        }
+        <div class="tombol-group">
+            <button class="btn btn-warning w-100" onclick="tambahKeranjang()">+ Keranjang</button>
+            <button class="btn btn-primary w-100" onclick="beliSekarang()">Beli Sekarang</button>
+        </div>
+    </div>
+</div>
 
-        function tambahKeranjang() {
-            let jumlah = document.getElementById("m-jumlah").value;
-            window.location.href = "logic/cart_logic.php?id_produk=" + idProdukDipilih + "&jumlah=" + jumlah;
-        }
+<script>
+    let idProdukDipilih = null;
+    let stokTersedia    = 0;
 
-        function beliSekarang() {
-            let jumlah = document.getElementById("m-jumlah").value;
-            window.location.href = "checkout.php?id_produk=" + idProdukDipilih + "&jumlah=" + jumlah;
-        }
-    </script>
+    function bukaModal(gambar, nama, harga, stok, kategori, deskripsi, status, id_produk) {
+        idProdukDipilih = id_produk;
+        stokTersedia    = parseInt(stok);
 
+        document.getElementById("m-gambar").src          = "uploads/produk/" + gambar;
+        document.getElementById("m-nama").innerText       = nama;
+        document.getElementById("m-harga").innerText      = parseInt(harga).toLocaleString("id-ID");
+        document.getElementById("m-stok").innerText       = stok;
+        document.getElementById("m-kategori").innerText   = kategori;
+        document.getElementById("m-deskripsi").innerText  = deskripsi;
+        document.getElementById("m-status").innerText     = status;
+        document.getElementById("m-jumlah").max           = stok;
+        document.getElementById("overlay").style.display  = "block";
+    }
+
+    function tutupModal() {
+        document.getElementById("overlay").style.display = "none";
+    }
+
+    function tambahKeranjang() {
+        let jumlah = document.getElementById("m-jumlah").value;
+        if(parseInt(jumlah) > stokTersedia) {
+            alert("Maaf, stok tidak mencukupi!");
+            return;
+        }
+        window.location.href = "logic/cart_logic.php?id_produk=" + idProdukDipilih + "&jumlah=" + jumlah;
+    }
+
+    function beliSekarang() {
+        let jumlah = document.getElementById("m-jumlah").value;
+        if(parseInt(jumlah) > stokTersedia) {
+            alert("Maaf, stok tidak mencukupi!");
+            return;
+        }
+        window.location.href = "checkout.php?id_produk=" + idProdukDipilih + "&jumlah=" + jumlah;
+    }
+</script>
 
 </body>
 </html>
