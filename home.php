@@ -1,19 +1,26 @@
 <?php 
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     require_once 'server.php';
     require_once 'function/product_function.php';
+
+    // Proteksi Login
+    if (!isset($_SESSION["id_user"])) {
+        header("Location: login.php");
+        exit;
+    }
 
     $id_user = $_SESSION["id_user"];
     $produk = tampilSemuaProduk($connect, $id_user);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Blooming – Plant Shop</title>
+    <title>Comparan</title>
 
     <!-- Bootstrap 5 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
@@ -56,33 +63,88 @@
             object-fit: cover;
         }
 
-        /* Modal */
+        /* Overlay */
         .overlay {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
+            z-index: 9999; 
         }
-        .modal {
+
+        /* Kotak Modal */
+        .modal-konten {
             background: white;
-            width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            border-radius: 8px;
+            width: 95%;
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 25px;
+            border-radius: 15px;
+            position: relative;
+            z-index: 10000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        .modal img {
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            width: 220px;
+            border-radius: 12px;
+            background: white;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-img-container {
             width: 100%;
+            height: 180px;
+            overflow: hidden;
         }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-konten img {
+            width: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
         .tutup {
             float: right;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 28px;
+            line-height: 20px;
+            color: #999;
+        }
+
+        .tutup:hover { color: #333; }
+
+        .tombol-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
-<body class="mx-4 m-0 p-0" style="background-color: rgb(242, 255, 223);">
-    <nav class="navbar navbar-expand-lg sticky-top" style="background-color: rgb(242, 255, 223);">
+<body class="mx-4 m-0 p-0" style="background-color: rgb(209, 223, 188);">
+    <nav class="navbar navbar-expand-lg sticky-top" style="background-color: rgb(209, 223, 188);">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center mx-3" href="#">
                 <img src="assets/logo-fix.png" alt="logo" class="logoNav" style="width: 120px;">
@@ -141,7 +203,7 @@
             <!-- this is card -->
             <h3 class="text-center mt-5 mb-3 fw-semibold" style="font-family: 'Alphazet', sans-serif; color:#5d9300;">Why Choose Comparan?</h3>
             <div class="row px-0 w-100 justify-content-center">
-                <div class="iconCard card col-12 col-md-4 mb-3 border-0" style=" padding-left: 0;">
+                <div class="iconCard col-12 col-md-4 mb-3 border-0" style="padding-left: 0;">
                     <div class="row g-0">
                         <div class="iconBody card-body text-start">
                             <h5 class="iconTitle card-title"><i class="bi bi-leaf-fill"></i> Sustainable Products</h5>
@@ -149,7 +211,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="iconCard card col-12 col-md-4 mb-3 border-0" style="">
+                <div class="iconCard col-12 col-md-4 mb-3 border-0">
                     <div class="row g-0">
                         <div class="iconBody card-body text-start">
                             <h5 class="iconTitle card-title"><i class="bi bi-truck"></i> Safe and Fast Delivery</h5>
@@ -157,7 +219,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="iconCard card col-12 col-md-4 mb-3 border-0" style=" padding-right: 0;">
+                <div class="iconCard col-12 col-md-4 mb-3 border-0" style=" padding-right: 0;">
                     <div class="row g-0">
                         <div class="iconBody card-body text-start">
                             <h5 class="iconTitle card-title"><i class="bi bi-person-heart"></i> Support Local Farmers</h5>
@@ -172,26 +234,26 @@
             <div class="w-100 mt-5 mt-md-5">
                 <h2 class="vision text-center">We have vision to <span style="color: #b5bc00;">Save The Earth</span></h2>
             </div>
-            <div class="containerCard row px-0 w-100 m-0 my-4">
-                <div class="col-md-3 visionCard bg-transparent border-0 rounded- m-0" style="padding-left: 0; padding-right: 3rem;">
+            <div class="containerCard row px-0 w-100 m-0 my-4 justify-content-between">
+                <div class="col-md-3 visionCard bg-transparent border-0 rounded- m-0 px-5" style="">
                     <div class="visionBody position-relative">
                         <img src="assets/image-1.png" class="imageVisionCard card-img-top rounded-5" alt="Image 1">
                         <p class="visionText card-text">Sustainability</p>
                     </div>
                 </div>
-                <div class="col-md-3 visionCard bg-transparent border-0 rounded-5 m-0" style="padding-left: 1rem; padding-right: 2rem;">
+                <div class="col-md-3 visionCard bg-transparent border-0 rounded-5 m-0 px-5" style="">
                     <div class="visionBody position-relative">
                         <img src="assets/image-3.png" class="imageVisionCard card-img-top rounded-5" alt="Image 3">
                         <p class="visionText card-text">Conservation</p>
                     </div>
                 </div>
-                <div class="col-md-3 visionCard bg-transparent border-0 rounded- m-0" style="padding-left: 2rem; padding-right: 1rem;">
+                <div class="col-md-3 visionCard bg-transparent border-0 rounded- m-0 px-5" style="">
                     <div class="visionBody position-relative">
                         <img src="assets/image-2.png" class="imageVisionCard card-img-top rounded-5" alt="Image 2">
                         <p class="visionText card-text">Greening The Earth</p>
                     </div>
                 </div>
-                <div class="col-md-3 visionCard bg-transparent border-0 rounded-5 m-0" style="padding-right: 0; padding-left: 3rem;">
+                <div class="col-md-3 visionCard bg-transparent border-0 rounded-5 m-0 px-5" style="">
                     <div class="visionBody position-relative">
                         <img src="assets/image-4.png" class="imageVisionCard card-img-top rounded-5" alt="Image 4">
                         <p class="visionText card-text">Reforestation</p>
@@ -203,15 +265,21 @@
         </div>
     </section class="bg-black">
 
-    <section id="shop" class="bg-black mx-4">
+    <section id="shop" class="mx-4">
         <?php if (count($produk) === 0): ?>
             <p>Belum ada produk tersedia.</p>
             <?php else: ?>
-                <div class="col p-0 bg-primary mx-4">
-                    <div class="row">
+                <div class="row m-0 w-100 justify-content-between">
+                    <?php if (count($produk) <= 18) {?>
+                        <h1 class="my-5 text-center">Our Products</h1>
                         <?php foreach ($produk as $p): ?>
-                            <div class="productCard" onclick="bukaModal(
+                            <div class="productCard col-6 col-md-1.5">
+                                <img src="uploads/produk/<?= $p["gambar"] ?>">
+                                <b style="text-transform: capitalize;"><?= $p["nama_produk"] ?></b><br>
+                                Rp <?= number_format($p["harga"], 0, ',', '.') ?><br>
+                                <button class="showDetails w-100 rounded-pill" onclick="bukaModal(
                                 '<?= $p['gambar'] ?>',
+                                '<?= $p['nama_pemilik'] ?>',
                                 '<?= htmlspecialchars(addslashes($p['nama_produk'])) ?>',
                                 '<?= $p['harga'] ?>',
                                 '<?= $p['stok'] ?>',
@@ -219,14 +287,34 @@
                                 '<?= htmlspecialchars(addslashes(preg_replace('/\s+/', ' ', $p['deskripsi']))) ?>',
                                 '<?= $p['status'] ?>',
                                 '<?= $p['id_produk'] ?>'
-                            )">
-                                <img src="uploads/produk/<?= $p["gambar"] ?>">
-                                <b><?= $p["nama_produk"] ?></b><br>
-                                Rp <?= number_format($p["harga"], 0, ',', '.') ?><br>
-                                Stok: <?= $p["stok"] ?>
+                                )">
+                                coba
+                                </button>
                             </div>
                         <?php endforeach; ?>
-                    </div>
+                        <?php foreach ($produk as $p): ?>
+                            <div class="productCard col-6 col-md-1.5">
+                                <img src="uploads/produk/<?= $p["gambar"] ?>">
+                                <b style="text-transform: capitalize;"><?= $p["nama_produk"] ?></b><br>
+                                Rp <?= number_format($p["harga"], 0, ',', '.') ?><br>
+                                <button class="showDetails w-100 rounded-pill" onclick="bukaModal(
+                                '<?= $p['gambar'] ?>',
+                                '<?= $p['nama_pemilik'] ?>',
+                                '<?= htmlspecialchars(addslashes($p['nama_produk'])) ?>',
+                                '<?= $p['harga'] ?>',
+                                '<?= $p['stok'] ?>',
+                                '<?= $p['kategori'] ?>',
+                                '<?= htmlspecialchars(addslashes(preg_replace('/\s+/', ' ', $p['deskripsi']))) ?>',
+                                '<?= $p['status'] ?>',
+                                '<?= $p['id_produk'] ?>'
+                                )">
+                                coba
+                                </button>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php } else { ?>
+                        XXXXXXXX
+                    <?php } ?>
                 </div>
             <?php endif; ?>
     
@@ -236,12 +324,13 @@
                 <span class="tutup" onclick="tutupModal()">✕</span>
                 <img id="m-gambar" src="" class="img-fluid"><br><br>
                 <b id="m-nama"></b><br>
+                Pemilik: <span id="m-namaPemilik"></span><br><br>
                 Harga    : Rp <span id="m-harga"></span><br>
                 Stok     : <span id="m-stok"></span><br>
                 Kategori : <span id="m-kategori"></span><br>
                 Status   : <span id="m-status"></span><br>
                 Deskripsi: <span id="m-deskripsi"></span><br><br>
-    
+                
                 <label>Jumlah:</label><br>
                 <input type="number" id="m-jumlah" value="1" min="1"><br><br>
     
@@ -256,41 +345,48 @@
             <button class="btn btn-secondary">Logout</button>
         </a>
     </section>
+</div>
+<script>
+    let idProdukDipilih = null;
+    let stokTersedia    = 0;
 
-    <script>
-        let idProdukDipilih = null;
-        let stokTersedia    = 0;
+    function bukaModal(gambar, nama_pemilik, nama, harga, stok, kategori, deskripsi, status, id_produk) {
+        idProdukDipilih = id_produk;
+        stokTersedia    = parseInt(stok);
 
-        function bukaModal(gambar, nama, harga, stok, kategori, deskripsi, status, id_produk) {
-            idProdukDipilih = id_produk;
-            stokTersedia    = parseInt(stok);
+        document.getElementById("m-gambar").src          = "uploads/produk/" + gambar;
+        document.getElementById("m-namaPemilik").innerText       = nama_pemilik;
+        document.getElementById("m-nama").innerText       = nama;
+        document.getElementById("m-harga").innerText      = parseInt(harga).toLocaleString("id-ID");
+        document.getElementById("m-stok").innerText       = stok;
+        document.getElementById("m-kategori").innerText   = kategori;
+        document.getElementById("m-deskripsi").innerText  = deskripsi;
+        document.getElementById("m-status").innerText     = status;
+        document.getElementById("m-jumlah").max           = stok;
+        document.getElementById("overlay").style.display  = "block";
+    }
 
-            document.getElementById("m-gambar").src          = "uploads/produk/" + gambar;
-            document.getElementById("m-nama").innerText      = nama;
-            document.getElementById("m-harga").innerText     = parseInt(harga).toLocaleString("id-ID");
-            document.getElementById("m-stok").innerText      = stok;
-            document.getElementById("m-kategori").innerText  = kategori;
-            document.getElementById("m-deskripsi").innerText = deskripsi;
-            document.getElementById("m-status").innerText    = status;
-            document.getElementById("m-jumlah").max          = stok;
-            document.getElementById("overlay").style.display = "block";
+    function tutupModal() {
+        document.getElementById("overlay").style.display = "none";
+    }
+
+    function tambahKeranjang() {
+        let jumlah = document.getElementById("m-jumlah").value;
+        if(parseInt(jumlah) > stokTersedia) {
+            alert("Maaf, stok tidak mencukupi!");
+            return;
         }
+        window.location.href = "logic/cart_logic.php?id_produk=" + idProdukDipilih + "&jumlah=" + jumlah;
+    }
 
-        function tutupModal() {
-            document.getElementById("overlay").style.display = "none";
+    function beliSekarang() {
+        let jumlah = document.getElementById("m-jumlah").value;
+        if(parseInt(jumlah) > stokTersedia) {
+            alert("Maaf, stok tidak mencukupi!");
+            return;
         }
-
-        function tambahKeranjang() {
-            let jumlah = document.getElementById("m-jumlah").value;
-            window.location.href = "logic/cart_logic.php?id_produk=" + idProdukDipilih + "&jumlah=" + jumlah;
-        }
-
-        function beliSekarang() {
-            let jumlah = document.getElementById("m-jumlah").value;
-            window.location.href = "checkout.php?id_produk=" + idProdukDipilih + "&jumlah=" + jumlah;
-        }
-    </script>
-
-
+        window.location.href = "checkout.php?id_produk=" + idProdukDipilih + "&jumlah=" + jumlah;
+    }
+</script>
 </body>
 </html>

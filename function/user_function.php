@@ -1,8 +1,8 @@
 <?php
     // Fungsi buat tambah user baru
-    function tambahUser($connect, $nama, $username, $password) {
+    function tambahUser($connect, $nama, $username, $password, $email) {
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-        $sql = "INSERT INTO users (nama, username, password, role, poin) VALUES ('$nama', '$username', '$passwordHash', 'user', 0)";
+        $sql = "INSERT INTO users (nama, username, password, role, poin, email) VALUES ('$nama', '$username', '$passwordHash', 'user', 0, '$email')";
         $connect->query($sql);
         
         $id_user = $connect->insert_id;

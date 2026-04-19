@@ -458,11 +458,39 @@ video{
 #shop{
     margin-left: 1.5rem;
     margin-right: 1.5rem;
-    margin-bottom: 3rem;
+    margin: 3rem;
+    background-color: #ffffff;
+    border-radius: 36px;
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.236); */
+}
+
+.productColumn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .productCard{
+    background-color: #effce8;
+    border: none !important;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.286);
+    border-radius: 25px;
+    padding: 1.5rem;
     margin: 1rem;
+}
+
+.productCard img{
+    margin: 0 !important;
+    border-radius: 20px;
+    border: #9ab377 2px solid;
+    height: 50px;
+}
+
+.showDetails{
+    margin-top: 15px;
+    background-color: #b1dd74;
+    border: none;
+    height: 40px;
 }
 
     /* TAMPILAN HOME */

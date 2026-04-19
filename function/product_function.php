@@ -16,10 +16,38 @@
 
     // Fungsi buat ambil semua produk kecuali produk milik user
     function tampilSemuaProduk($connect, $id_user){
-        $sql = "SELECT * FROM products WHERE id_user != '$id_user'";
+        $sql = "SELECT p.*, u.nama as nama_pemilik FROM products as p INNER JOIN users as u ON p.id_user = u.id_user WHERE p.id_user != '$id_user'";
         $result = $connect->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
         //fetch_all() digunakan untuk mengambil semua baris hasil query. 
         // MYSQLI_ASSOC memastikan bahwa setiap baris dikembalikan sebagai array asosiatif, di mana nama kolom digunakan sebagai kunci.
+    }
+
+    // Fungsi ngedit data product
+    function editProduk($connect, $id_produk, $nama_produk, $harga, $stok, $deskripsi, $kategori, $gambar) {
+        if ($gambar) {
+            $connect->query("UPDATE products SET 
+                            nama_produk = '$nama_produk',
+                            harga       = '$harga',
+                            stok        = '$stok',
+                            deskripsi   = '$deskripsi',
+                            kategori    = '$kategori',
+                            gambar      = '$gambar'
+                            WHERE id_produk = '$id_produk'");
+        } else {
+            $connect->query("UPDATE products SET 
+                            nama_produk = '$nama_produk',
+                            harga       = '$harga',
+                            stok        = '$stok',
+                            deskripsi   = '$deskripsi',
+                            kategori    = '$kategori'
+                            WHERE id_produk = '$id_produk'");
+        }
+    }
+
+    // Fungsi buat hapus produk
+    function hapusProduk($connect, $id_produk) {
+        $sql = "DELETE FROM products WHERE id_produk = '$id_produk'";
+        $connect->query($sql);  
     }
 ?>
