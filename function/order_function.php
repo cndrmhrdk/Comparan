@@ -10,7 +10,7 @@
 
     foreach ($items as $item){
 
-    $subtotal    = $item["harga"] * $item["jumlah"];
+        $subtotal    = $item["harga"] * $item["jumlah"];
         $harga       = $item["harga"];
         $jumlah      = $item["jumlah"];
         $id_produk   = $item["id_produk"];

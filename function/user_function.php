@@ -26,4 +26,13 @@
         }
         return false;
     }
+
+    // Fungsi buat ambil data user untuk profil
+    function tampilDataUser($connect, $id_user){
+        $sql = "SELECT * FROM users WHERE id_user = '$id_user'";
+        $result = $connect->query($sql);
+        return $result->fetch_assoc();
+        //fetch_all() digunakan untuk mengambil semua baris hasil query. 
+        // MYSQLI_ASSOC memastikan bahwa setiap baris dikembalikan sebagai array asosiatif, di mana nama kolom digunakan sebagai kunci.
+    }
 ?>

@@ -16,6 +16,6 @@
     // Panggil fungsi tambahKeranjang
     tambahKeranjang($connect, $id_cart, $id_produk, $jumlah);
 
-    header("Location: ../home.php");
+    header("Location: ../home.php#shop");
     exit;
 ?>

@@ -16,7 +16,7 @@
 
     // Fungsi buat ambil semua produk kecuali produk milik user
     function tampilSemuaProduk($connect, $id_user){
-        $sql = "SELECT p.*, u.nama as nama_pemilik FROM products as p INNER JOIN users as u ON p.id_user = u.id_user WHERE p.id_user != '$id_user'";
+        $sql = "SELECT p.*, u.nama as nama_pemilik FROM products as p INNER JOIN users as u ON p.id_user = u.id_user WHERE p.id_user != '$id_user' && p.stok > 0";
         $result = $connect->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
         //fetch_all() digunakan untuk mengambil semua baris hasil query. 
@@ -25,6 +25,7 @@
 
     // Fungsi ngedit data product
     function editProduk($connect, $id_produk, $nama_produk, $harga, $stok, $deskripsi, $kategori, $gambar) {
+
         if ($gambar) {
             $connect->query("UPDATE products SET 
                             nama_produk = '$nama_produk',
@@ -41,6 +42,17 @@
                             stok        = '$stok',
                             deskripsi   = '$deskripsi',
                             kategori    = '$kategori'
+                            WHERE id_produk = '$id_produk'");
+        }
+
+        // update status pas edit data product
+        if ($stok > 0){
+            $connect->query("UPDATE products SET 
+                            status = 'open'
+                            WHERE id_produk = '$id_produk'");
+        } else {
+            $connect->query("UPDATE products SET 
+                            status = 'sold'
                             WHERE id_produk = '$id_produk'");
         }
     }

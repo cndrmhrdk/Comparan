@@ -4,6 +4,7 @@
     }
     require_once 'server.php';
     require_once 'function/product_function.php';
+    require_once 'function/user_function.php';
 
     // Proteksi Login
     if (!isset($_SESSION["id_user"])) {
@@ -12,6 +13,7 @@
     }
 
     $id_user = $_SESSION["id_user"];
+    $dataUser = tampilDataUser($connect, $id_user);
     $produk = tampilSemuaProduk($connect, $id_user);
 ?>
 
@@ -26,125 +28,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <!-- Bootstrap Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <!-- Google Fonts -->
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> -->
     <!-- css -->
     <link rel="stylesheet" href="css/style.css">
     <style>
-    .modal-konten {
-    background: white;
-    width: 400px;
-    margin: 100px auto;
-    padding: 20px;
-    border-radius: 8px;
-    position: relative; /* Tambahkan ini */
-    z-index: 1001;
-}
-    /* placeholder plant images via emoji/css */
-    .plant-emoji {
-    font-size: 2.2rem;
-    width: 56px; height: 56px;
-    display: flex; align-items: center; justify-content: center;
-    }
-    .grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        .productCard {
-            border: 1px solid #ccc;
-            padding: 10px;
-            width: 180px;
-            cursor: pointer;
-        }
-        .productCard img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        /* Overlay */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 9999; 
-        }
-
-        /* Kotak Modal */
-        .modal-konten {
-            background: white;
-            width: 95%;
-            max-width: 450px;
-            margin: 50px auto;
-            padding: 25px;
-            border-radius: 15px;
-            position: relative;
-            z-index: 10000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .card {
-            border: 1px solid #ddd;
-            width: 220px;
-            border-radius: 12px;
-            background: white;
-            overflow: hidden;
-            transition: transform 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-        }
-
-        .card-img-container {
-            width: 100%;
-            height: 180px;
-            overflow: hidden;
-        }
-
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .modal-konten img {
-            width: 100%;
-            border-radius: 10px;
-            object-fit: cover;
-            margin-bottom: 15px;
-        }
-
-        .tutup {
-            float: right;
-            cursor: pointer;
-            font-size: 28px;
-            line-height: 20px;
-            color: #999;
-        }
-
-        .tutup:hover { color: #333; }
-
-        .tombol-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
     </style>
 </head>
-<body class="mx-4 m-0 p-0" style="background-color: rgb(209, 223, 188);">
-    <nav class="navbar navbar-expand-lg sticky-top" style="background-color: rgb(209, 223, 188);">
+<body class="bodyHome mx-4 m-0 p-0" style="background-color: rgb(215, 231, 192);">
+    <nav class="navbar navbar-expand-lg sticky-top" style="background-color: rgb(215, 231, 192);">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center mx-3" href="#">
                 <img src="assets/logo-fix.png" alt="logo" class="logoNav" style="width: 120px;">
@@ -162,9 +52,40 @@
                         </div>
                     </div>
                     <div class="col-1 text-lg-end">
-                        <a class="nav-link" aria-disabled="true" href="cart.php" id="navbarNavAltMarkup">
-                            <i class="cartIcon bi bi-cart"></i>
-                        </a>
+                        <div class="d-flex justify-content-between">
+                            <a class="nav-link d-flex align-items-center" aria-disabled="true" href="cart.php" id="navbarNavAltMarkup">
+                                <i class="cartIcon bi bi-cart d-flex align-items-center fs-2"></i>
+                            </a>
+                            <span class="d-flex align-items-center">|</span>
+                            <div onclick="bukaProfil(
+                                '<?= $dataUser['nama'] ?>',
+                                '<?= $dataUser['username'] ?>',
+                                '<?= $dataUser['poin'] ?>',
+                                '<?= $dataUser['email'] ?>'
+                            )">
+                                <i class="bi bi-person-circle d-flex align-items-center fs-2" style="cursor: pointer;"></i>
+                            </div>
+                            
+                            <!-- Profile Open -->
+                            <div class="overlay1 position-fixed" id="overlay1" onclick="tutupModal()">
+                                <div class="containerShowProfile">
+                                    <div class="showProfile row m-0 mb-auto">
+                                        <i class="bi bi-person-circle d-flex align-items-center fs-2 justify-content-center mb-3"></i>
+                                        <p><b><span id="p-nama" style="text-transform: capitalize;"></span></b><br><i>@<span id="p-username"></span></i></p>
+                                        <p class="m-0"><i class="bi bi-c-circle"></i> <span id="p-poin"></span><br><span class="m-0"><i class="bi bi-envelope-at"> <span id="p-email" style="font-style: none;"></span></i></span></p>
+                                        <hr>
+                                        <a href="my_product.php"><i class="bi bi-bag"></i> My Product</a>
+                                        <a href="riwayat_order.php"><i class="bi bi-clock-history"></i> Order History</a>
+                                        <a href="add_product.php"><i class="bi bi-upload"></i> Upload Product</a>
+                                        <a href="voucher.php"><i class="bi bi-tag"></i> My Voucher</a>
+                                        <hr>
+                                        <a href="logout.php" class="text-center">
+                                            <button class="btn border-dark">Sign Out</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -235,25 +156,25 @@
                 <h2 class="vision text-center">We have vision to <span style="color: #b5bc00;">Save The Earth</span></h2>
             </div>
             <div class="containerCard row px-0 w-100 m-0 my-4 justify-content-between">
-                <div class="col-md-3 visionCard bg-transparent border-0 rounded- m-0 px-5" style="">
+                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded- m-0 px-5" style="">
                     <div class="visionBody position-relative">
                         <img src="assets/image-1.png" class="imageVisionCard card-img-top rounded-5" alt="Image 1">
                         <p class="visionText card-text">Sustainability</p>
                     </div>
                 </div>
-                <div class="col-md-3 visionCard bg-transparent border-0 rounded-5 m-0 px-5" style="">
+                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded-5 m-0 px-5" style="">
                     <div class="visionBody position-relative">
                         <img src="assets/image-3.png" class="imageVisionCard card-img-top rounded-5" alt="Image 3">
                         <p class="visionText card-text">Conservation</p>
                     </div>
                 </div>
-                <div class="col-md-3 visionCard bg-transparent border-0 rounded- m-0 px-5" style="">
+                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded- m-0 px-5" style="">
                     <div class="visionBody position-relative">
                         <img src="assets/image-2.png" class="imageVisionCard card-img-top rounded-5" alt="Image 2">
                         <p class="visionText card-text">Greening The Earth</p>
                     </div>
                 </div>
-                <div class="col-md-3 visionCard bg-transparent border-0 rounded-5 m-0 px-5" style="">
+                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded-5 m-0 px-5" style="">
                     <div class="visionBody position-relative">
                         <img src="assets/image-4.png" class="imageVisionCard card-img-top rounded-5" alt="Image 4">
                         <p class="visionText card-text">Reforestation</p>
@@ -264,19 +185,32 @@
             <!-- <h3>Let's see, choose, buy our plant, and get <span style="color: ;">an exclusive voucher</span>!</h3> -->
         </div>
     </section class="bg-black">
+    
 
     <section id="shop" class="mx-4">
+        <!-- <div class="w-100 text-center">
+            <span class="heroBadge text-center my-2 fw-bold">✦ WELCOME TO OUR SHOP ✦</span>
+        </div> -->
+        <div class="heroShop text-center d-flex align-items-center justify-content-center mt-4 rounded-4">
+            <div class="heroContent">
+                <h1 class="heroTitle display-4 fw-bold">Everything starts with <span style="color: #cbf485;">Small steps</span></h1>
+                <p class="heroSubtitle mb-4">Choose the best seeds for a greener future. Every seed you plant brings new life to the world.</p>
+            </div>
+        </div>
+        <h1 class="ourProduct text-start mx-3 mt-5 mb-5" style="font-family: 'Aesthetic'; color: #75b800; font-style:italic;"><u>Our products✦</u></h1>
         <?php if (count($produk) === 0): ?>
             <p>Belum ada produk tersedia.</p>
             <?php else: ?>
-                <div class="row m-0 w-100 justify-content-between">
-                    <?php if (count($produk) <= 18) {?>
-                        <h1 class="my-5 text-center">Our Products</h1>
-                        <?php foreach ($produk as $p): ?>
-                            <div class="productCard col-6 col-md-1.5">
+                <?php if (count($produk) <= 18) {?>
+                <div class="row m-0 w-100 justify-content-start">
+                    <?php foreach ($produk as $p): ?>
+                        <div class="productCard col-6 col-md-2">
+                            <div class="productBody card-body">
                                 <img src="uploads/produk/<?= $p["gambar"] ?>">
-                                <b style="text-transform: capitalize;"><?= $p["nama_produk"] ?></b><br>
-                                Rp <?= number_format($p["harga"], 0, ',', '.') ?><br>
+                                <b class="mt-2" style="text-transform: capitalize;"><?= $p["nama_produk"] ?></b>
+                                <div class="productHarga mb-3">
+                                    Rp<?= number_format($p["harga"], 0, ',', '.') ?>
+                                </div>
                                 <button class="showDetails w-100 rounded-pill" onclick="bukaModal(
                                 '<?= $p['gambar'] ?>',
                                 '<?= $p['nama_pemilik'] ?>',
@@ -288,67 +222,70 @@
                                 '<?= $p['status'] ?>',
                                 '<?= $p['id_produk'] ?>'
                                 )">
-                                coba
+                                show details
                                 </button>
                             </div>
-                        <?php endforeach; ?>
-                        <?php foreach ($produk as $p): ?>
-                            <div class="productCard col-6 col-md-1.5">
-                                <img src="uploads/produk/<?= $p["gambar"] ?>">
-                                <b style="text-transform: capitalize;"><?= $p["nama_produk"] ?></b><br>
-                                Rp <?= number_format($p["harga"], 0, ',', '.') ?><br>
-                                <button class="showDetails w-100 rounded-pill" onclick="bukaModal(
-                                '<?= $p['gambar'] ?>',
-                                '<?= $p['nama_pemilik'] ?>',
-                                '<?= htmlspecialchars(addslashes($p['nama_produk'])) ?>',
-                                '<?= $p['harga'] ?>',
-                                '<?= $p['stok'] ?>',
-                                '<?= $p['kategori'] ?>',
-                                '<?= htmlspecialchars(addslashes(preg_replace('/\s+/', ' ', $p['deskripsi']))) ?>',
-                                '<?= $p['status'] ?>',
-                                '<?= $p['id_produk'] ?>'
-                                )">
-                                coba
-                                </button>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php } else { ?>
-                        XXXXXXXX
-                    <?php } ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php } else { ?>
+                    XXXXXXXX
+                <?php } ?>
                 </div>
             <?php endif; ?>
     
         <!-- Modal -->
-        <div class="overlay" id="overlay" onclick="tutupModal()">
-            <div class="modal-konten" onclick="event.stopPropagation()">
-                <span class="tutup" onclick="tutupModal()">✕</span>
-                <img id="m-gambar" src="" class="img-fluid"><br><br>
-                <b id="m-nama"></b><br>
-                Pemilik: <span id="m-namaPemilik"></span><br><br>
-                Harga    : Rp <span id="m-harga"></span><br>
-                Stok     : <span id="m-stok"></span><br>
-                Kategori : <span id="m-kategori"></span><br>
-                Status   : <span id="m-status"></span><br>
-                Deskripsi: <span id="m-deskripsi"></span><br><br>
-                
-                <label>Jumlah:</label><br>
-                <input type="number" id="m-jumlah" value="1" min="1"><br><br>
-    
-                <div class="tombol-group">
-                    <button class="btn btn-warning" onclick="tambahKeranjang()">+ Keranjang</button>
-                    <button class="btn btn-primary" onclick="beliSekarang()">Beli Sekarang</button>
+        <div class="overlay2" id="overlay2" onclick="tutupModal()">
+            <div class="modal-konten row w-75" onclick="event.stopPropagation()">
+                <span class="tutup p-0 text-end" onclick="tutupModal()"><i class="bi bi-x"></i></span><br>
+                <div class="modalCol col-5 p-3"> 
+                    <img id="m-gambar" src="" class="img-fluid"><br><br>
+                </div>
+                <div class="modalCol col-7 p-3 d-flex justify-content-between">
+                    <div class="productInfo">
+                        <b id="m-nama";"></b> 
+                        <h5 class="pemilik"><span id="m-namaPemilik" style="text-transform: capitalize;"></span>'s product</h5>
+                        <div class="hargaProduct">
+                            Rp<span id="m-harga"></span>
+                        </div>
+                        <hr>
+                        <i class="fw-semibold fs-4" style="font-family: 
+                        'Belgiano', sans-serif; color: #456f00;">Spesifications</i>
+                        <h5 class="productData"><i class="bi bi-tree"></i> Category  : <span id="m-kategori"></span></h5>
+                        <h5 class="productData"><i class="bi bi-check-circle"></i> Status : <span id="m-status"></span></h5>
+                        <h5 class="productData"><i class="bi bi-bookmark"></i> Description : <br><span id="m-deskripsi"></span></h5>
+                    </div>
+                    <div class="buyOption mx-2">
+                        <div class="buyOptionItems col">
+                            <label class="fw-semibold mb-2 fs-5" style="color: #456f00; font-family: 'Belgiano', sans-serif;">Set quantity</label>
+                            <div class="buttonQuantity">
+                                <button type="button" class="btn-qty" onclick="hitungJumlah(-1)">-</button>
+                                <input type="number" id="m-jumlah" class="text-center bg-transparent rounded-2" value="1" min="1" style="color:#406700; border: 2px solid #406700;">
+                                <button type="button" class="btn-qty " onclick="hitungJumlah(1)">+</button>
+                            </div>
+                            <h5 class="productStock mb-3">Stock : <span id="m-stok"></span></h5>
+                            <div class="row m-0">
+                                <button class="buttonCart btn" onclick="tambahKeranjang()">+ Add to cart <i class="bi bi-cart-fill"></i></button>
+                                <button class="buttonCheckout btn" onclick="beliSekarang()">Checkout now</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    
-        <a href="logout.php">
-            <button class="btn btn-secondary">Logout</button>
-        </a>
     </section>
 </div>
 <script>
     let idProdukDipilih = null;
     let stokTersedia    = 0;
+
+    function bukaProfil(nama, username, poin, email){
+        // document.getElementById("p-gambar").src = 
+        document.getElementById("p-nama").innerText = nama;
+        document.getElementById("p-username").innerText = username;
+        document.getElementById("p-poin").innerText = poin;
+        document.getElementById("p-email").innerText = email;
+        document.getElementById("overlay1").classList.add("show");
+    }
 
     function bukaModal(gambar, nama_pemilik, nama, harga, stok, kategori, deskripsi, status, id_produk) {
         idProdukDipilih = id_produk;
@@ -363,15 +300,32 @@
         document.getElementById("m-deskripsi").innerText  = deskripsi;
         document.getElementById("m-status").innerText     = status;
         document.getElementById("m-jumlah").max           = stok;
-        document.getElementById("overlay").style.display  = "block";
+        document.getElementById("overlay2").classList.add("show");
     }
 
     function tutupModal() {
-        document.getElementById("overlay").style.display = "none";
+        const resetJumlah = document.getElementById("m-jumlah");
+        resetJumlah.value = 1;
+        document.getElementById("overlay1").classList.remove("show");
+        document.getElementById("overlay2").classList.remove("show");
+    }
+
+    function hitungJumlah(jml){
+        const inputJumlah = document.getElementById("m-jumlah");
+
+        let ubahInput = parseInt(inputJumlah.value);
+        let hitung = ubahInput + jml;
+
+        if (hitung >= 1 && hitung <= stokTersedia){
+            inputJumlah.value = hitung;
+        } else if (hitung > stokTersedia) {
+            alert("You hit the stock limit! (" + stokTersedia + ")")
+        }
     }
 
     function tambahKeranjang() {
         let jumlah = document.getElementById("m-jumlah").value;
+
         if(parseInt(jumlah) > stokTersedia) {
             alert("Maaf, stok tidak mencukupi!");
             return;
