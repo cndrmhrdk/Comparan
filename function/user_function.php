@@ -35,4 +35,22 @@
         //fetch_all() digunakan untuk mengambil semua baris hasil query. 
         // MYSQLI_ASSOC memastikan bahwa setiap baris dikembalikan sebagai array asosiatif, di mana nama kolom digunakan sebagai kunci.
     }
+
+    // Fungsi edit profil
+    function editProfil($connect, $id_user, $nama, $username, $password, $foto_profile){
+        if ($password) {
+        $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+        if ($foto_profile) {
+            $connect->query("UPDATE users SET nama = '$nama', username = '$username', password = '$passwordHash', foto_profile = '$foto_profile' WHERE id_user = '$id_user'");
+        } else {
+            $connect->query("UPDATE users SET nama = '$nama', username = '$username', password = '$passwordHash' WHERE id_user = '$id_user'");
+        }
+    } else {
+        if ($foto_profile) {
+            $connect->query("UPDATE users SET nama = '$nama', username = '$username', foto_profile = '$foto_profile' WHERE id_user = '$id_user'");
+        } else {
+            $connect->query("UPDATE users SET nama = '$nama', username = '$username' WHERE id_user = '$id_user'");
+        }
+    }
+    }
 ?>
