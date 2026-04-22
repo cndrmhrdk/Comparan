@@ -15,8 +15,14 @@
             $diskon += $voucher["nilai"];
         }
 
+        $subtotal    = $item["harga"] * $item["jumlah"];
+        $harga       = $item["harga"];
+        $jumlah      = $item["jumlah"];
+        $id_produk   = $item["id_produk"];
+
         $total_bayar = $total - $diskon;
         if ($total_bayar < 0) $total_bayar = 0;
+
 
         // 1. Buat order
         $connect->query("INSERT INTO orders (id_user, id_cart, alamat_pengiriman, total_harga, diskon, total_bayar, status) 

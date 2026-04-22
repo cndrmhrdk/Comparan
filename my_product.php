@@ -62,10 +62,12 @@
         .modal { 
             background: white; 
             width: 90%; max-width: 450px; 
-            margin: 50px auto; 
+            margin: 50px auto;
+            height: 560px;
             padding: 25px; 
             border-radius: 12px; 
             position: relative;
+            overflow-y: auto;
         }
         .modal img { width: 100%; border-radius: 8px; margin-bottom: 15px; }
         .tutup { position: absolute; top: 15px; right: 20px; cursor: pointer; font-size: 24px; }

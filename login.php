@@ -17,7 +17,10 @@
             session_start();
             $_SESSION["id_user"] = $user["id_user"];
             $_SESSION["nama"] = $user["nama"];
+            $_SESSION["username"] = $user["username"];
             $_SESSION["role"] = $user["role"];
+            $_SESSION["poin"] = $user["poin"];
+            $_SESSION["email"] = $user["email"];
             header("Location: home.php");
             exit();
         } else {

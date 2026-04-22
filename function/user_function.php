@@ -1,8 +1,8 @@
 <?php
     // Fungsi buat tambah user baru
-    function tambahUser($connect, $nama, $username, $password) {
+    function tambahUser($connect, $nama, $username, $password, $email) {
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-        $sql = "INSERT INTO users (nama, username, password, role, poin) VALUES ('$nama', '$username', '$passwordHash', 'user', 0)";
+        $sql = "INSERT INTO users (nama, username, password, role, poin, email) VALUES ('$nama', '$username', '$passwordHash', 'user', 0, '$email')";
         $connect->query($sql);
         
         $id_user = $connect->insert_id;
@@ -25,5 +25,14 @@
             return $row;
         }
         return false;
+    }
+
+    // Fungsi buat ambil data user untuk profil
+    function tampilDataUser($connect, $id_user){
+        $sql = "SELECT * FROM users WHERE id_user = '$id_user'";
+        $result = $connect->query($sql);
+        return $result->fetch_assoc();
+        //fetch_all() digunakan untuk mengambil semua baris hasil query. 
+        // MYSQLI_ASSOC memastikan bahwa setiap baris dikembalikan sebagai array asosiatif, di mana nama kolom digunakan sebagai kunci.
     }
 ?>

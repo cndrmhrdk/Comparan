@@ -8,8 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nama     = $_POST["name"];
     $username = $_POST["username"];
     $password = $_POST["password"];
+    $email = $_POST["email"];
 
-    $id = tambahUser($connect, $nama, $username, $password);
+    $id = tambahUser($connect, $nama, $username, $password, $email);
 
     if ($id) {
         $pesan = "Registrasi berhasil!";
@@ -99,6 +100,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 <div class="mt-4 text-start w-100 px-5">
                                     <label for="exampleFormControlInput1" class="form-label fw-semibold">Name</label>
                                     <input type="text" class="form-control rounded-4 px-4 p-2" id="name" name="name" placeholder="Input your name" required>
+                                </div>
+                                <div class="mt-4 text-start w-100 px-5">
+                                    <label for="exampleFormControlInput1" class="form-label fw-semibold">Email</label>
+                                    <input type="email" class="form-control rounded-4 px-4 p-2" id="email" name="email" placeholder="Input your email" required>
                                 </div>
                                 <div class="px-5 mt-4 text-start w-100">
                                     <label for="exampleFormControlInput1" class="form-label fw-semibold">Password</label>
