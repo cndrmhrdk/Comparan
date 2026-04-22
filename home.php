@@ -46,7 +46,7 @@
                 <div class="row w-100 align-items-center">
                     <div class="col-11 d-flex justify-content-center">
                         <div class="containerItemNav navbar-nav d-flex justify-content-center">
-                            <a class="nav-link rounded-start-pill px-3" aria-current="page" href="#dashboard">Dashboard</a>
+                            <a class="nav-link rounded-start-pill px-3" aria-current="page" href="#">Dashboard</a>
                             <a class="nav-link px-3" href="#about">About</a>
                             <a class="nav-link rounded-end-pill px-3" href="#shop">Shop</a>
                         </div>
@@ -124,7 +124,9 @@
             <!-- this is card -->
             <h3 class="text-center mt-5 mb-3 fw-semibold" style="font-family: 'Alphazet', sans-serif; color:#5d9300;">Why Choose Comparan?</h3>
             <div class="row px-0 w-100 justify-content-center">
+
                 <div class="iconCard col-12 col-md-4 mb-3 border-0" style="padding-left: 0;">
+
                     <div class="row g-0">
                         <div class="iconBody card-body text-start">
                             <h5 class="iconTitle card-title"><i class="bi bi-leaf-fill"></i> Sustainable Products</h5>
@@ -132,7 +134,9 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="iconCard col-12 col-md-4 mb-3 border-0">
+
                     <div class="row g-0">
                         <div class="iconBody card-body text-start">
                             <h5 class="iconTitle card-title"><i class="bi bi-truck"></i> Safe and Fast Delivery</h5>
@@ -140,7 +144,9 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="iconCard col-12 col-md-4 mb-3 border-0" style=" padding-right: 0;">
+
                     <div class="row g-0">
                         <div class="iconBody card-body text-start">
                             <h5 class="iconTitle card-title"><i class="bi bi-person-heart"></i> Support Local Farmers</h5>
@@ -273,6 +279,13 @@
             </div>
         </div>
     </section>
+
+
+
+
+        
+    </div>
+
 </div>
 <script>
     let idProdukDipilih = null;

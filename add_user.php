@@ -18,9 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
         } else {
             $pesan = "Registrasi gagal.";
-            }
-            }
-            ?>
+        }
+    }
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
