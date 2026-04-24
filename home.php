@@ -76,7 +76,7 @@
                                                 style="width:100px; border-radius:100%; margin-left: 90px" class="d-flex align-items-center fs-2 justify-content-center mb-3">
                                         <?php else: ?>
                                             <img src="uploads/profil/default.png" 
-                                                style="width:45px; height:45px; border-radius:50%; object-fit:cover;">
+                                                style="width:100px; border-radius:100%; margin-left: 90px" class="d-flex align-items-center fs-2 justify-content-center mb-3">
                                         <?php endif; ?>    
                                     <!-- <i class="bi bi-person-circle d-flex align-items-center fs-2 justify-content-center mb-3"></i> -->
                                         <p><b><span id="p-nama" style="text-transform: capitalize;"></span></b><br><i>@<span id="p-username"></span></i></p>
