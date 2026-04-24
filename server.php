@@ -2,7 +2,7 @@
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $database = "comparan";
+    $database = "comparan1";
 
     $connect = mysqli_connect($servername, $username, $password, $database);
     if (!$connect) {

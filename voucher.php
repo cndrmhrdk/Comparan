@@ -18,45 +18,216 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Voucher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voucher Saya</title>
+    <style>
+        :root {
+            --primary: #6FB400; 
+            --success: #629f00; 
+            --danger: #ef4444;  
+            --bg: rgb(215, 231, 192); 
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Tombol Kembali Tetap di Kanan Atas */
+        .btn-kembali {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: white;
+            color: var(--text);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 60px auto 0 auto;
+        }
+
+        /* Header Poin Full Width */
+        .poin-card {
+            background: linear-gradient(135deg, var(--primary) 0%, #a0d000 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px -5px rgba(111, 180, 0, 0.3);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .poin-card b { font-size: 30px; }
+
+        /* Grid Layout Utama */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Membagi 2 kolom sama besar */
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* Responsive: Jadi 1 kolom kalau di HP */
+        @media (max-width: 850px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .container { margin-top: 80px; }
+        }
+
+        /* Gaya Tiket */
+        .ticket {
+            display: flex;
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .ticket::before, .ticket::after {
+            content: '';
+            position: absolute;
+            left: 75%;
+            width: 20px;
+            height: 20px;
+            background: var(--bg);
+            border-radius: 50%;
+            z-index: 2;
+        }
+        .ticket::before { top: -10px; }
+        .ticket::after { bottom: -10px; }
+
+        .ticket-left {
+            padding: 15px;
+            flex: 1;
+            border-right: 2px dashed var(--bg);
+        }
+
+        .ticket-right {
+            width: 25%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fafafa;
+        }
+
+        .ticket-name { font-weight: bold; font-size: 16px; display: block; }
+        .ticket-val { color: var(--primary); font-weight: bold; font-size: 14px; }
+        .ticket-cost { font-size: 11px; color: #64748b; margin-top: 5px; display: block; }
+
+        .btn-tukar {
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .status-badge {
+            font-size: 10px;
+            font-weight: bold;
+            color: var(--success);
+            border: 1px solid var(--success);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .alert {
+            grid-column: span 2; /* Alert memanjang memenuhi grid */
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        @media (max-width: 850px) { .alert { grid-column: span 1; } }
+
+        .alert-success { background: #dcfce7; color: #15803d; }
+        .alert-danger { background: #fee2e2; color: #b91c1c; }
+
+        h3 { 
+            font-size: 18px; 
+            margin-top: 0; 
+            margin-bottom: 20px; 
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0,0,0,0.05);
+        }
+    </style>
 </head>
 <body>
-    <h2>Voucher</h2>
-    <p>Poin kamu: <b><?= $poin ?></b></p>
 
-    <?php if ($pesan === "berhasil"): ?>
-        <p style="color:green;">Voucher berhasil ditukar!</p>
-    <?php elseif ($pesan === "poin_kurang"): ?>
-        <p style="color:red;">Poin kamu tidak cukup.</p>
-    <?php endif; ?>
+<a href="home.php" class="btn-kembali">← Kembali</a>
 
-    <h3>Voucher Tersedia</h3>
-    <?php if (count($vouchers) === 0): ?>
-        <p>Belum ada voucher tersedia.</p>
-    <?php else: ?>
-        <?php foreach ($vouchers as $v): ?>
-            <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-                <b><?= $v["nama"] ?></b><br>
-                Potongan : Rp <?= number_format($v["nilai"], 0, ',', '.') ?><br>
-                Poin     : <?= $v["poin_diperlukan"] ?> poin<br>
-                <a href="logic/tukar_voucher_logic.php?id_voucher=<?= $v["id_voucher"] ?>"
-                    onclick="return confirm('Tukar voucher ini dengan <?= $v["poin_diperlukan"] ?> poin?')">Tukar</a>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
+<div class="container">
+    <div class="poin-card">
+        <span style="font-weight: bold; font-size: 20px;">Saldo Poin Anda:</span>
+        <b>🪙 <?= number_format($poin, 0, ',', '.') ?></b>
+    </div>
 
-    <h3>Voucher Saya</h3>
-    <?php if (count($milik) === 0): ?>
-        <p>Belum punya voucher.</p>
-    <?php else: ?>
-        <?php foreach ($milik as $v): ?>
-            <div style="border: 1px solid green; padding: 10px; margin-bottom: 10px;">
-                <b><?= $v["nama"] ?></b><br>
-                Potongan : Rp <?= number_format($v["nilai"], 0, ',', '.') ?><br>
-                Status   : <?= $v["status"] ?>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
+    <div class="main-layout">
+        <?php if ($pesan === "berhasil"): ?>
+            <div class="alert alert-success">✨ Berhasil menukar voucher!</div>
+        <?php elseif ($pesan === "poin_kurang"): ?>
+            <div class="alert alert-danger">❌ Poin tidak cukup.</div>
+        <?php endif; ?>
+
+        <div class="section">
+            <h3>🎟️ Tukar Voucher</h3>
+            <?php if (count($vouchers) === 0): ?>
+                <p style="color: #64748b;">Belum ada voucher tersedia.</p>
+            <?php else: ?>
+                <?php foreach ($vouchers as $v): ?>
+                    <div class="ticket">
+                        <div class="ticket-left">
+                            <span class="ticket-name"><?= $v["nama"] ?></span>
+                            <span class="ticket-val">Potongan Rp <?= number_format($v["nilai"], 0, ',', '.') ?></span>
+                            <span class="ticket-cost">Biaya: <?= $v["poin_diperlukan"] ?> Poin</span>
+                        </div>
+                        <div class="ticket-right">
+                            <a href="logic/tukar_voucher_logic.php?id_voucher=<?= $v["id_voucher"] ?>" 
+                               class="btn-tukar"
+                               onclick="return confirm('Tukar voucher ini?')">TUKAR</a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+
+        <div class="section">
+            <h3>🎁 Voucher Saya</h3>
+            <?php if (count($milik) === 0): ?>
+                <p style="color: #64748b;">Kamu belum memiliki voucher.</p>
+            <?php else: ?>
+                <?php foreach ($milik as $v): ?>
+                    <div class="ticket" style="opacity: 0.95;">
+                        <div class="ticket-left">
+                            <span class="ticket-name"><?= $v["nama"] ?></span>
+                            <span class="ticket-val">Potongan Rp <?= number_format($v["nilai"], 0, ',', '.') ?></span>
+                        </div>
+                        <div class="ticket-right">
+                            <span class="status-badge"><?= $v["status"] ?></span>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

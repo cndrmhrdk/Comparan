@@ -83,7 +83,7 @@
         <div class="alert alert-info">Belum ada riwayat transaksi.</div>
     <?php else: ?>
         <?php foreach ($orders as $order): ?>
-            <div class="card-order" onclick="bukaDetail('<?= $order["id_order"] ?>')">
+            <div class="card-order" onclick="bukaDetail('<?= $order['id_order'] ?>')">
                 <div class="d-flex justify-content-between">
                     <b>Order #<?= $order["id_order"] ?></b>
                     <span class="badge bg-success"><?= $order["status"] ?></span>

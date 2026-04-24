@@ -15,6 +15,7 @@
     $id_user = $_SESSION["id_user"];
     $dataUser = tampilDataUser($connect, $id_user);
     $produk = tampilSemuaProduk($connect, $id_user);
+    $user = tampilDataUser($connect, $id_user);
 ?>
 
 <!DOCTYPE html>
@@ -70,9 +71,17 @@
                             <div class="overlay1 position-fixed" id="overlay1" onclick="tutupModal()">
                                 <div class="containerShowProfile">
                                     <div class="showProfile row m-0 mb-auto">
-                                        <i class="bi bi-person-circle d-flex align-items-center fs-2 justify-content-center mb-3"></i>
+                                        <?php if ($user["foto_profile"]): ?>
+                                            <img src="uploads/profil/<?= $user["foto_profile"] ?>" 
+                                                style="width:100px; border-radius:100%; margin-left: 90px" class="d-flex align-items-center fs-2 justify-content-center mb-3">
+                                        <?php else: ?>
+                                            <img src="uploads/profil/default.png" 
+                                                style="width:100px; border-radius:100%; margin-left: 90px" class="d-flex align-items-center fs-2 justify-content-center mb-3">
+                                        <?php endif; ?>    
+                                    <!-- <i class="bi bi-person-circle d-flex align-items-center fs-2 justify-content-center mb-3"></i> -->
                                         <p><b><span id="p-nama" style="text-transform: capitalize;"></span></b><br><i>@<span id="p-username"></span></i></p>
                                         <p class="m-0"><i class="bi bi-c-circle"></i> <span id="p-poin"></span><br><span class="m-0"><i class="bi bi-envelope-at"> <span id="p-email" style="font-style: none;"></span></i></span></p>
+                                        <a href="profil.php"><i class="bi bi-bag"></i> EditProfil</a>
                                         <hr>
                                         <a href="my_product.php"><i class="bi bi-bag"></i> My Product</a>
                                         <a href="riwayat_order.php"><i class="bi bi-clock-history"></i> Order History</a>
@@ -162,25 +171,25 @@
                 <h2 class="vision text-center">We have vision to <span style="color: #b5bc00;">Save The Earth</span></h2>
             </div>
             <div class="containerCard row px-0 w-100 m-0 my-4 justify-content-between">
-                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded- m-0 px-5" style="">
+                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded- m-0 px-5" >
                     <div class="visionBody position-relative">
                         <img src="assets/image-1.png" class="imageVisionCard card-img-top rounded-5" alt="Image 1">
                         <p class="visionText card-text">Sustainability</p>
                     </div>
                 </div>
-                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded-5 m-0 px-5" style="">
+                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded-5 m-0 px-5" >
                     <div class="visionBody position-relative">
                         <img src="assets/image-3.png" class="imageVisionCard card-img-top rounded-5" alt="Image 3">
                         <p class="visionText card-text">Conservation</p>
                     </div>
                 </div>
-                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded- m-0 px-5" style="">
+                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded- m-0 px-5" >
                     <div class="visionBody position-relative">
                         <img src="assets/image-2.png" class="imageVisionCard card-img-top rounded-5" alt="Image 2">
                         <p class="visionText card-text">Greening The Earth</p>
                     </div>
                 </div>
-                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded-5 m-0 px-5" style="">
+                <div class="col-6 col-md-3 visionCard bg-transparent border-0 rounded-5 m-0 px-5" >
                     <div class="visionBody position-relative">
                         <img src="assets/image-4.png" class="imageVisionCard card-img-top rounded-5" alt="Image 4">
                         <p class="visionText card-text">Reforestation</p>
