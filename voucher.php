@@ -149,7 +149,7 @@
         }
 
         .alert {
-            grid-column: span 2; /* Alert memanjang memenuhi grid */
+            grid-column: span 2; 
             padding: 12px;
             border-radius: 10px;
             margin-bottom: 10px;
@@ -200,8 +200,8 @@
                         </div>
                         <div class="ticket-right">
                             <a href="logic/tukar_voucher_logic.php?id_voucher=<?= $v["id_voucher"] ?>" 
-                               class="btn-tukar"
-                               onclick="return confirm('Tukar voucher ini?')">TUKAR</a>
+                                class="btn-tukar"
+                                onclick="return confirm('Tukar voucher ini?')">TUKAR</a>
                         </div>
                     </div>
                 <?php endforeach; ?>

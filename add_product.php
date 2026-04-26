@@ -6,18 +6,18 @@
     $pesan = "";
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $id_user     = $_SESSION["id_user"];
+        $id_user     = $_SESSION["id_user"];    // Mengambil ID user dari session dan data produk dari inputan form
         $nama_produk = $_POST["nama_produk"];
         $harga       = $_POST["harga"];
         $stok        = $_POST["stok"];
         $deskripsi   = $_POST["deskripsi"];
         $kategori    = $_POST["kategori"];
 
-        //upload gambar
-        $gambar = $_FILES["gambar"]["name"];
-        $tempFile = $_FILES["gambar"]["tmp_name"];
-        move_uploaded_file($tempFile, "uploads/produk/" . $gambar);
-
+        //upload gambar                                                
+        $gambar = $_FILES["gambar"]["name"];                            // Mengambil nama asli file yang diunggah
+        $tempFile = $_FILES["gambar"]["tmp_name"];                      // Mengambil lokasi penyimpanan sementara file di server
+        move_uploaded_file($tempFile, "uploads/produk/" . $gambar);     // Memindahkan file dari lokasi sementara ke folder tujuan (uploads/produk/)
+        //paggil fungsi tambah produk
         $id_produk = tambahProduk($connect, $id_user, $nama_produk, $harga, $stok, $deskripsi, $kategori, $gambar);
         if ($id_produk) {
             $pesan = "Produk berhasil ditambahkan.";
@@ -28,10 +28,11 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Bootstrap 5 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <!-- Bootstrap Icon -->
@@ -78,5 +79,6 @@
             </div>
         </div>
     </div>
+
 </body>
 </html>

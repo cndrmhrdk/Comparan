@@ -4,14 +4,16 @@
     require_once 'function/cart_function.php';
     require_once 'function/voucher_function.php';
 
-    $id_user = $_SESSION["id_user"];
+    $id_user = $_SESSION["id_user"];        // Mengambil ID user dari session yang sedang aktif
     $sql = "SELECT id_cart FROM cart WHERE id_user = '$id_user'";
     $result = $connect->query($sql);
-    $cart = $result->fetch_assoc();
-    $id_cart = $cart["id_cart"];
-    
-    $items    = tampilKeranjang($connect, $id_cart);
-    $vouchers = voucherSaya($connect, $id_user);
+
+    $cart = $result->fetch_assoc();         // Mengambil hasil query dalam bentuk array asosiatif
+    $id_cart = $cart["id_cart"];            // Menyimpan ID keranjang ke dalam variabel
+
+    $items    = tampilKeranjang($connect, $id_cart);    // Mengambil daftar barang yang ada di dalam keranjang
+    $vouchers = voucherSaya($connect, $id_user);        // Mengambil daftar voucher yang dimiliki oleh user tersebut
+
 
     $total = 0;
     foreach ($items as $item) {

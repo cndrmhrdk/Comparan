@@ -12,8 +12,8 @@
         header("Location: login.php");
         exit();
     }
-
-    $id_user = $_SESSION["id_user"];
+    // Mengambil ID user yang sedang login dari data session
+    $id_user = $_SESSION["id_user"];        //Agar fungsi tahu data milik siapa yang harus diambil.
     $dataUser = tampilDataUser($connect, $id_user);
     $produk = tampilSemuaProduk($connect, $id_user);
 ?>

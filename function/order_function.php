@@ -85,6 +85,7 @@
                                 JOIN products ON order_items.id_produk = products.id_produk 
                                 WHERE order_items.id_order = '$id_order'";
         $result = $connect->query($sql);
+        
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 ?>

@@ -1,6 +1,7 @@
 <?php
     // Fungsi buat tambah user baru
     function tambahUser($connect, $nama, $username, $password, $email) {
+
         // cek email
         $cek = "SELECT * FROM users WHERE email = '$email'";
         $result = $connect->query($cek);
@@ -8,16 +9,18 @@
         if ($result->num_rows > 0) {
             return "email_sudah_ada";
         }
-        $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+       
+        $passwordHash = password_hash($password, PASSWORD_BCRYPT);          //hashing (BCRYPT) agar tidak tersimpan dalam teks biasa
+
         $sql = "INSERT INTO users (nama, username, password, role, poin, email) VALUES ('$nama', '$username', '$passwordHash', 'user', 0, '$email')";
         $connect->query($sql);
-        
+        // Mengambil ID terakhir yang baru saja dibuat secara otomatis (auto-increment)
         $id_user = $connect->insert_id;
         
         //stlah buat user, langsung buat cart kosong untuk user tsb
         $sql = "INSERT INTO cart (id_user) VALUES ('$id_user')";
         $connect->query($sql);
-        
+        // Mengembalikan ID user yang baru saja didaftarkan
         return $id_user;
     }
 
