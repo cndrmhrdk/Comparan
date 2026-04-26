@@ -9,7 +9,7 @@
     $result = $connect->query($sql);
     $cart = $result->fetch_assoc();
     $id_cart = $cart["id_cart"];
-
+    
     $items    = tampilKeranjang($connect, $id_cart);
     $vouchers = voucherSaya($connect, $id_user);
 
@@ -114,10 +114,10 @@
                     <label>Pilih Voucher (opsional):</label><br>
                     <?php foreach ($vouchers as $v): ?>
                         <input type="checkbox"
-                               name="id_vouchers[]"
-                               value="<?= $v["id"] ?>"
-                               data-nilai="<?= $v["nilai"] ?>"
-                               onchange="hitungDiskon()">
+                            name="id_vouchers[]"
+                            value="<?= $v["id"] ?>"
+                            data-nilai="<?= $v["nilai"] ?>"
+                            onchange="hitungDiskon()">
                         <?= $v["nama"] ?> — Potongan Rp <?= number_format($v["nilai"], 0, ',', '.') ?><br>
                     <?php endforeach; ?>
                     <br>

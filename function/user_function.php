@@ -1,6 +1,13 @@
 <?php
     // Fungsi buat tambah user baru
     function tambahUser($connect, $nama, $username, $password, $email) {
+        // cek email
+        $cek = "SELECT * FROM users WHERE email = '$email'";
+        $result = $connect->query($cek);
+
+        if ($result->num_rows > 0) {
+            return "email_sudah_ada";
+        }
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
         $sql = "INSERT INTO users (nama, username, password, role, poin, email) VALUES ('$nama', '$username', '$passwordHash', 'user', 0, '$email')";
         $connect->query($sql);
