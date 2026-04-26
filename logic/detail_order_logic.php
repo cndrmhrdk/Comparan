@@ -14,7 +14,7 @@
         exit;
     }
 
-    $orders = detailOrder($connect, $id_user);
+    $orders = detailOrder($connect, $id_order);
     header("Content-Type: application/json");
     echo json_encode($orders);
 ?>

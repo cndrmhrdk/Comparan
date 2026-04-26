@@ -85,12 +85,12 @@
         <?php foreach ($orders as $order): ?>
             <div class="card-order" onclick="bukaDetail('<?= $order['id_order'] ?>')">
                 <div class="d-flex justify-content-between">
-                    <b>Order #<?= $order["id_order"] ?></b>
+                    <b>Pesanan <?= $order["id_order"] ?></b>
                     <span class="badge bg-success"><?= $order["status"] ?></span>
                 </div>
                 <small class="text-muted"><?= date('d M Y, H:i', strtotime($order["tanggal_order"])) ?></small><br>
                 <span class="d-block mt-2">Total Bayar: <b>Rp <?= number_format($order["total_bayar"], 0, ',', '.') ?></b></span>
-                <small class="text-truncate d-block">Alamat: <?= $order["alamat_pengiriman"] ?></small>
+                <!-- <small class="text-truncate d-block">Alamat: <?= $order["alamat_pengiriman"] ?></small> -->
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
